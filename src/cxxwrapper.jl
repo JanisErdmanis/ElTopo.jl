@@ -1,7 +1,5 @@
 #g++ ../eltopo3d/obj/*.o -o eltopo.so -fPIC -shared -llapack -lblas -lstdc++ -lm -I../common -I../eltopo3d
 
-module ElTopoCxx
-
 include("../deps/deps.jl")
 
 using Parameters
@@ -163,6 +161,3 @@ function improve_mesh(points,faces,parameters::SurfTrackInitializationParameters
 
 end
 
-export SurfTrackInitializationParameters, improve_mesh
-
-end

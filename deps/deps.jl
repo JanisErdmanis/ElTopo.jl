@@ -9,15 +9,25 @@ if isdefined((@static VERSION < v"0.7.0-DEV.484" ? current_module() : @__MODULE_
 elseif VERSION >= v"0.7.0-DEV.3382"
     import Libdl
 end
+const eltopoc = joinpath(dirname(@__FILE__), "usr/lib/eltopoc.so")
 const eltopo = joinpath(dirname(@__FILE__), "usr/lib/eltopo.so")
 function check_deps()
+    global eltopoc
+    if !isfile(eltopoc)
+        error("$(eltopoc) does not exist, Please re-run Pkg.build(\"ElTopo.jl\"), and restart Julia.")
+    end
+
+    if Libdl.dlopen_e(eltopoc) in (C_NULL, nothing)
+        error("$(eltopoc) cannot be opened, Please re-run Pkg.build(\"ElTopo.jl\"), and restart Julia.")
+    end
+
     global eltopo
     if !isfile(eltopo)
-        error("$(eltopo) does not exist, Please re-run Pkg.build(\"ElTopo\"), and restart Julia.")
+        error("$(eltopo) does not exist, Please re-run Pkg.build(\"ElTopo.jl\"), and restart Julia.")
     end
 
     if Libdl.dlopen_e(eltopo) in (C_NULL, nothing)
-        error("$(eltopo) cannot be opened, Please re-run Pkg.build(\"ElTopo\"), and restart Julia.")
+        error("$(eltopo) cannot be opened, Please re-run Pkg.build(\"ElTopo.jl\"), and restart Julia.")
     end
 
 end

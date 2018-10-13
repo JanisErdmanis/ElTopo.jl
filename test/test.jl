@@ -1,8 +1,6 @@
-include("../src/ElTopoCxx.jl")
-using Main.ElTopo
-
+using ElTopo
 using JLD
-@load "sphere.jld"
 
-p = SurfTrackInitializationParameters()
-improve_mesh(points,faces,p)
+@load "test/sphere.jld"
+p = Elparameters()
+improvemesh(points,faces,p)

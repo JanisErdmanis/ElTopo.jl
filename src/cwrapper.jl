@@ -1,6 +1,3 @@
-
-module ElTopoC
-
 NSIZE = 100000
 
 using Parameters
@@ -62,10 +59,10 @@ using Parameters
 end
 
 #const libpath = Pkg.dir("SurfaceGeometry","src","libraries","eltopo-wrapper") * "/eltopo.so"
-const libpath = joinpath(dirname(dirname(@__FILE__)),"libraries","eltopo-wrapper", "eltopo.so")
+#const libpath = joinpath(dirname(@__FILE__),"eltopoC.so")
 
 function improvemesh(verticies,triangles,par)
-    triangles = map(Int32,triangles) .- 1
+    triangles = map(Int32,triangles .- 1) 
     
     outmsh_verticies = zeros(Float64,NSIZE)
     outmsh_triangles = zeros(Int32,NSIZE)
@@ -79,7 +76,7 @@ function improvemesh(verticies,triangles,par)
     # outmsh_verticies,outmsh_Nverticies,outmsh_triangles,outmsh_Ntriangles)
 
     
-    ccall((:improvemesh, libpath),Nothing,
+    ccall((:improvemesh, eltopoc),Nothing,
                 (Ptr{Cdouble},Cint,Ptr{Cint},Cint,
                  Ptr{Cdouble},Ref{Cint},Ptr{Cint},Ref{Cint},
                  Cdouble,Cdouble,Cdouble,Cdouble,Cint,Cdouble,Cdouble,Cdouble,Cdouble,Cdouble,Cint,Cint,Cdouble,Cdouble,Cint,Cdouble,Cdouble,Cint,Cint,Cint,Cint,Cint
@@ -115,27 +112,20 @@ function improvemesh(verticies,triangles,par)
     tout = outmsh_triangles[1:3*outmsh_Ntriangles[]]
     tout = reshape(tout,3,convert(Int,outmsh_Ntriangles[]))
 
-    return pout,map(Int,tout)+1
+    return pout,map(Int,tout).+1
 end
 
 
 function improvemeshcol(verticies,triangles,newverticies,par)
-    triangles = map(Int32,triangles) .- 1
+    triangles = map(Int32,triangles .- 1)
     actual_dt = Ref{Float64}(0)
     
     outmsh_verticies = zeros(Float64,NSIZE)
     outmsh_triangles = zeros(Int32,NSIZE)
     outmsh_Nverticies = Ref{Cint}(0)
     outmsh_Ntriangles = Ref{Cint}(0)
-
-    # @show ccall((:improvemesh, "/home/janiserdmanis/Documents/eltopo-master-old/mycode/eltopo.so"),Void,
-    #             (Ptr{Cdouble},Cint,Ptr{Cint},Cint,
-    #              Ptr{Cdouble},Ref{Cint},Ptr{Cint},Ref{Cint}),
-    #             inmsh_verticies,length(inmsh_verticies),inmsh_triangles,length(inmsh_triangles),
-    # outmsh_verticies,outmsh_Nverticies,outmsh_triangles,outmsh_Ntriangles)
-
     
-    ccall((:improvecol, libpath),Nothing,
+    ccall((:improvecol, eltopoc),Nothing,
                 (Ptr{Cdouble},Cint,Ptr{Cint},Cint,
                  Ptr{Cdouble},Ref{Cint},Ptr{Cint},Ref{Cint},
                  Cdouble, Ptr{Cdouble}, Ref{Cdouble},
@@ -173,7 +163,9 @@ function improvemeshcol(verticies,triangles,newverticies,par)
     tout = outmsh_triangles[1:3*outmsh_Ntriangles[]]
     tout = reshape(tout,3,convert(Int,outmsh_Ntriangles[]))
 
-    return actual_dt[],pout,map(Int,tout)+1
+    return actual_dt[],pout,map(Int,tout).+1
 end
 
-end
+
+
+

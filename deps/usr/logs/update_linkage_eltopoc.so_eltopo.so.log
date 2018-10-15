@@ -1,1 +1,0 @@
-`/usr/local/bin/patchelf --replace-needed ./destdir/lib/eltopo.so eltopo.so lib/eltopoc.so`

@@ -33,3 +33,10 @@ m_dt = h
 )
 ```
 Then one can use `p,f = improvemeshcol(p,f,par) ` or `actualdt,p,f = improvemeshcol(p,f,p + h*v2,par) ` to perform needed mesh improvement. 
+
+# Showcase
+
+To test the wrapper we integrated Enright velocity field which was was dicussed in [eltopo](https://github.com/tysonbrochu/eltopo) library's paper. 
+| ![](https://rawgit.com/akels/ElTopo.jl/master/img/topologystab.svg) | ![](https://rawgit.com/akels/ElTopo.jl/master/img/thinfeatures.svg)  |
+|---|---|
+| Evolution | Thin features are preserved |

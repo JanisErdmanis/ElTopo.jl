@@ -40,6 +40,6 @@ To test the wrapper we integrated Enright velocity field which was was dicussed 
 
 
 
-| ![](https://raw.githubusercontent.com/akels/ElTopo.jl/master/img/topologystab.svg) | ![](https://raw.githubusercontent.com/akels/ElTopo.jl/master/img/thinfeatures.svg)  |
+| ![](img/topologystab.svg) | ![](https://raw.githubusercontent.com/akels/ElTopo.jl/master/img/thinfeatures.svg)  |
 |---|---|
 | Evolution | Thin features are preserved |

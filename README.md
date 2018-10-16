@@ -38,8 +38,6 @@ Then one can use `p,f = improvemeshcol(p,f,par) ` or `actualdt,p,f = improvemesh
 
 To test the wrapper we integrated Enright velocity field which was was dicussed in [eltopo](https://github.com/tysonbrochu/eltopo) library's paper.
 
-
-
-| ![](img/topologystab.svg) | ![](https://raw.githubusercontent.com/akels/ElTopo.jl/master/img/thinfeatures.svg)  |
+| ![](img/topologystab.svg) | ![](img/thinfeatures.svg)  |
 |---|---|
 | Evolution | Thin features are preserved |

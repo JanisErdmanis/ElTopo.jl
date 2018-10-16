@@ -1,3 +1,5 @@
+![](https://travis-ci.org/akels/ElTopo.jl.svg?branch=master)
+
 # Introduction
 
 ElTopo is a package which interfaces C++ library [eltopo](https://github.com/tysonbrochu/eltopo) and which is built with [ElTopoBuilder](https://github.com/akels/ElTopoBuilder). At the moment only Linux platform is supported, but since BinaryBuilder is being used, it should not take much effort for adding support for other platforms.

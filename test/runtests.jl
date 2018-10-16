@@ -37,3 +37,8 @@ end
 
 par = Elparameters(m_dt=1.0)
 improvemeshcol(points,faces,points + 0.01*v,par)
+
+@info "Testing problematic part"
+par = Elparameters(m_dt=1.0,m_allow_vertex_movement=true)
+improvemeshcol(points,faces,points + 0.01*v,par)
+

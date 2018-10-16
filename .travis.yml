@@ -1,0 +1,15 @@
+# Documentation: http://docs.travis-ci.com/user/languages/julia/
+
+before_install:
+    - sudo apt-get -qq update
+    - sudo apt-get install -y liblapack-dev libblas-dev
+  
+language: julia
+os:
+  - linux
+julia:
+   - 1.0
+  
+notifications:
+  email: false
+

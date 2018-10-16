@@ -1,6 +1,12 @@
 using ElTopo
 using JLD
-@load "test/sphere.jld"
+
+#const sphere = "$(dirname(@__FILE__))/sphere.jld"
+#@load $sphere
+
+data = load("$(dirname(@__FILE__))/sphere.jld")
+points,faces = data["points"], data["faces"]
+
 
 @info "Testing improvemesh"
 

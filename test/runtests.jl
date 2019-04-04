@@ -1,44 +1,21 @@
 using ElTopo
-using JLD
+using GeometryTypes
 
-#const sphere = "$(dirname(@__FILE__))/sphere.jld"
-#@load $sphere
+t = ( 1 + sqrt( 5 ) ) / 2;
 
-data = load("$(dirname(@__FILE__))/sphere.jld")
-points,faces = data["points"], data["faces"]
+vertices = Point{3,Float64}[
+    [ -1,  t,  0 ], [  1, t, 0 ], [ -1, -t,  0 ], [  1, -t,  0 ],
+    [  0, -1,  t ], [  0, 1, t ], [  0, -1, -t ], [  0,  1, -t ],
+    [  t,  0, -1 ], [  t, 0, 1 ], [ -t,  0, -1 ], [ -t,  0,  1 ]
+]
 
+faces = Face{3,Int64}[
+    [1, 12, 6], [1, 6, 2], [1, 2, 8], [1, 8, 11], [1, 11, 12], [2, 6, 10], [6, 12, 5], 
+    [12, 11, 3], [11, 8, 7], [8, 2, 9], [4, 10, 5], [4, 5, 3], [4, 3, 7], [4, 7, 9],  
+    [4, 9, 10], [5, 10, 6], [3, 5, 12], [7, 3, 11], [9, 7, 8], [10, 9, 2] 
+]
 
-@info "Testing improvemesh"
+msh = HomogenousMesh(vertices ./ sqrt(1+t^2),faces)
 
-p = Elparameters()
-improvemesh(points,faces,p)
-
-@info "Testing improvemeshcol"
-
-function velocity(t,pos)
-    x,y,z = pos
-    
-    x = x*0.15 + 0.35
-    y = y*0.15 + 0.35
-    z = z*0.15 + 0.35
-
-    u = 2*sin(pi*x)^2 * sin(2*pi*y) * sin(2*pi*z) * sin(2/3*pi*t)
-    v = - sin(2*pi*x) * sin(pi*y)^2 * sin(2*pi*z) * sin(2/3*pi*t)
-    w = - sin(2*pi*x) * sin(2*pi*y) * sin(pi*z)^2 * sin(2/3*pi*t)
-
-    [u,v,w] /0.15
-end
-
-v = zero(points)
-t = 1
-for i in 1:size(points,2)
-    v[:,i] = velocity(t,points[:,i])
-end
-
-par = Elparameters(m_dt=1.0)
-improvemeshcol(points,faces,points + 0.01*v,par)
-
-@info "Testing problematic part"
-par = Elparameters(m_dt=1.0,m_allow_vertex_movement=true)
-improvemeshcol(points,faces,points + 0.01*v,par)
-
+par = SurfTrack(allow_vertex_movement=true)
+mshnew = stabilize(msh,par)

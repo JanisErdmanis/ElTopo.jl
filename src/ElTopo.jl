@@ -41,7 +41,7 @@ function convert(::Type{Array{Int64,2}},f::Array{Face{3,Int64},1})
 end
 ### 
 
-include("../deps/deps.jl")
+include("../deps/depseltopo.jl")
 
 @with_kw struct SurfTrack
     # Elements closer than this are considered "near" (or proximate)

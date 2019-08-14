@@ -1,15 +1,16 @@
-# Documentation: http://docs.travis-ci.com/user/languages/julia/
-
-before_install:
-    - sudo apt-get -qq update
-    - sudo apt-get install -y liblapack-dev libblas-dev
-  
 language: julia
 os:
   - linux
 julia:
-   - 1.1
-  
-notifications:
-  email: false
+  - 1.0
+jobs:
+  include:
+    - stage: "Documentation"
+      julia: 1.0
+      os: linux
+      script:
+        - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
+                                               Pkg.instantiate()'
+        - julia --project=docs/ docs/make.jl
+      after_success: skip
 

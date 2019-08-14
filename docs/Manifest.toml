@@ -46,10 +46,10 @@ uuid = "9e28174c-4ba2-5203-b857-d8d62c4213ee"
 version = "0.8.10"
 
 [[BinaryProvider]]
-deps = ["Libdl", "Pkg", "SHA", "Test"]
-git-tree-sha1 = "055eb2690182ebc31087859c3dd8598371d3ef9e"
+deps = ["Libdl", "Logging", "SHA"]
+git-tree-sha1 = "c7361ce8a2129f20b0e05a89f7070820cfed6648"
 uuid = "b99e7846-7c00-51b0-8f62-c81ae34c0232"
-version = "0.5.3"
+version = "0.5.6"
 
 [[CMake]]
 deps = ["BinDeps"]
@@ -153,14 +153,6 @@ git-tree-sha1 = "0a106457a1831555857e18ac9617279c22fc393b"
 uuid = "dc8bdbbb-1ca9-579f-8c36-e416f6a65cce"
 version = "0.2.0"
 
-[[Cxx]]
-deps = ["BinDeps", "BinaryProvider", "Libdl", "REPL"]
-git-tree-sha1 = "d5504fa39b813269a280b1692a40197b4188f51f"
-repo-rev = "bindeps_j1.1"
-repo-url = "https://github.com/cdsousa/Cxx.jl"
-uuid = "a0b5b9ef-44b7-5148-a2d1-f6db19f3c3d2"
-version = "0.3.2+"
-
 [[DataAPI]]
 git-tree-sha1 = "8903f0219d3472543fc4b2f5ebaf675a07f817c0"
 uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
@@ -218,6 +210,18 @@ deps = ["LinearAlgebra", "PDMats", "Printf", "QuadGK", "Random", "SpecialFunctio
 git-tree-sha1 = "baaf9e165ba8a2d11fb4fb3511782ee070ee3694"
 uuid = "31c24e10-a181-5473-b8eb-7969acd0382f"
 version = "0.21.1"
+
+[[DocStringExtensions]]
+deps = ["LibGit2", "Markdown", "Pkg", "Test"]
+git-tree-sha1 = "0513f1a8991e9d83255e0140aace0d0fc4486600"
+uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
+version = "0.8.0"
+
+[[Documenter]]
+deps = ["Base64", "DocStringExtensions", "InteractiveUtils", "JSON", "LibGit2", "Logging", "Markdown", "REPL", "Test", "Unicode"]
+git-tree-sha1 = "c61d6eedbc3c4323c08b64af12d29c8ee0fcbb5f"
+uuid = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+version = "0.23.2"
 
 [[FFTViews]]
 deps = ["CustomUnitRanges", "FFTW", "Test"]
@@ -290,10 +294,10 @@ uuid = "e9467ef8-e4e7-5192-8a1a-b1aee30e663a"
 version = "0.0.6"
 
 [[GeometryTypes]]
-deps = ["ColorTypes", "FixedPointNumbers", "IterTools", "LinearAlgebra", "StaticArrays", "Test"]
-git-tree-sha1 = "a9bc71d5a7eb971b61db353eb66c4a1de0551d8c"
+deps = ["ColorTypes", "FixedPointNumbers", "IterTools", "LinearAlgebra", "StaticArrays"]
+git-tree-sha1 = "2b0bfb379a54bdfcd2942f388f7d045f8952373d"
 uuid = "4d00f742-c7ba-57c2-abde-4428a4b178cb"
-version = "0.7.3"
+version = "0.7.5"
 
 [[Graphics]]
 deps = ["Colors", "Compat", "NaNMath"]
@@ -402,6 +406,12 @@ version = "7.0.1"
 [[LinearAlgebra]]
 deps = ["Libdl"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[[Literate]]
+deps = ["Base64", "JSON", "REPL"]
+git-tree-sha1 = "d62e501650ccb8d13f0f1a79fcba552848fd38fe"
+uuid = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
+version = "2.0.2"
 
 [[Loess]]
 deps = ["Distances", "Random", "Statistics", "Test"]

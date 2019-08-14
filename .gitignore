@@ -1,2 +1,6 @@
+docs/build/
+docs/src/enright.md
+docs/src/index.md
 deps/usr
 deps/build.log
+deps/debseltopo.jl

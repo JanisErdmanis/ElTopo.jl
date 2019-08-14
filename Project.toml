@@ -7,8 +7,6 @@ version = "0.1.0"
 BinaryProvider = "b99e7846-7c00-51b0-8f62-c81ae34c0232"
 Cxx = "a0b5b9ef-44b7-5148-a2d1-f6db19f3c3d2"
 GeometryTypes = "4d00f742-c7ba-57c2-abde-4428a4b178cb"
-Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
-Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a"
 Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
 
 [compat]

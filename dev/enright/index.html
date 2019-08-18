@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Introduction · ElTopo.jl</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link href="../assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><h1>ElTopo.jl</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="../search/"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li><a class="toctext" href="../">Introduction</a></li><li class="current"><a class="toctext" href>Introduction</a><ul class="internal"><li><a class="toctext" href="#The-Enright-test-1">The Enright test</a></li></ul></li></ul></nav><article id="docs"><header><nav><ul><li><a href>Introduction</a></li></ul><a class="edit-page" href="https://github.com/akels/ElTopo.jl/blob/master/examples/enright.jl"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Introduction</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="Introduction-1" href="#Introduction-1">Introduction</a></h1><p>ElTopo.jl is a library which allows to restructure and refine triangular mesh as it evolves. Suitable to simulate time dependant boundary problems, such as droplet behaviour uppon external fields, gradients, and it&#39;s changing surface tension. Or interfaces of homogenous liquids in a container. Full range of possibilities can be explored in the original C++ library ElTopo, which is interfaces here with Cxx.jl.</p><h2><a class="nav-anchor" id="The-Enright-test-1" href="#The-Enright-test-1">The Enright test</a></h2><p>To see the algorithm in action we may look how a triangulated sphere behaves under periodic incompressable shear flow.</p><p>First, let&#39;s define a Enright velocity field:</p><pre><code class="language-julia">using GeometryTypes
+using AbstractPlotting, GLMakie
+using ElTopo
+
+function velocity(t,pos)
+    x,y,z = pos
+
+    x = x*0.15 + 0.35
+    y = y*0.15 + 0.35
+    z = z*0.15 + 0.35
+
+    u = 2*sin(pi*x)^2 * sin(2*pi*y) * sin(2*pi*z) * sin(2/3*pi*t)
+    v = - sin(2*pi*x) * sin(pi*y)^2 * sin(2*pi*z) * sin(2/3*pi*t)
+    w = - sin(2*pi*x) * sin(2*pi*y) * sin(pi*z)^2 * sin(2/3*pi*t)
+
+    [u,v,w] /0.3 #/0.15
+end</code></pre><p>First let&#39;s create a sphere mesh.</p><pre><code class="language-julia">include(&quot;sphere.jl&quot;)
+msh = unitsphere(2)</code></pre><p>Now let&#39;s do something fun.</p><pre><code class="language-julia">x = Node(msh)
+y = lift(x-&gt;x,x)
+
+scene = Scene(show_axis=false)
+
+wireframe!(scene,y,linewidth = 3f0)
+mesh!(scene,y, color = :white, shading = false)
+
+display(scene)
+
+t = 0
+Δt = 0.01
+N = convert(Int,floor(pi/ Δt))
+
+# msh = HomogenousMesh(v0,f0)
+par = SurfTrack(allow_vertex_movement=true)
+
+record(scene, &quot;enright.gif&quot;, 1:N) do i # for i in 1:N
+    update_cam!(scene,Vec3f0(4,4,4), Vec3f0(2, 0, 0))
+
+    ### Second order RK2
+    global v = msh.vertices
+    global f = msh.faces
+
+    k1 = [velocity(t,pos) for pos in v]
+    v1 = v .+ k1 .* Δt
+    k2 = [velocity(t+Δt/2,pos) for pos in v1]
+
+    v2 = v .+ k2 .* Δt
+
+    mshn = HomogenousMesh(v2,f)
+    global msh = stabilize(mshn,par)
+
+    push!(x,msh)
+
+    AbstractPlotting.force_update!()</code></pre><p>sleep(Δt)</p><pre><code class="language-julia">    global t+=Δt
+end</code></pre><p><img src="../enright.gif" alt/></p><footer><hr/><a class="previous" href="../"><span class="direction">Previous</span><span class="title">Introduction</span></a></footer></article></body></html>

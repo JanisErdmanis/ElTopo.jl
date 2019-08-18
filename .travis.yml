@@ -1,7 +1,6 @@
 before_install:
     - sudo apt-get -qq update
     - sudo apt-get install -y liblapack-dev libblas-dev 
-    - sudo apt-get install -y xorg-dev
 
 language: julia
 os:
@@ -9,4 +8,13 @@ os:
 julia:
   - 1.1
 
-  
+jobs:
+  include:
+    - stage: "Documentation"
+      julia: 1.1
+      os: linux
+      script:
+        - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
+                                               Pkg.instantiate()'
+        - julia --project=docs/ docs/make.jl
+      after_success: skip

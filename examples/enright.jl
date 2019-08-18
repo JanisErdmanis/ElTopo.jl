@@ -8,7 +8,7 @@
 
 # First, let's define a Enright velocity field:
 using GeometryTypes
-using Makie
+using AbstractPlotting, GLMakie
 using ElTopo
 
 function velocity(t,pos)
@@ -67,7 +67,7 @@ record(scene, "enright.gif", 1:N) do i # for i in 1:N
     push!(x,msh)
     
     AbstractPlotting.force_update!()
-    sleep(Δt)
+    # sleep(Δt)
 
     global t+=Δt
 end

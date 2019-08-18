@@ -1,5 +1,9 @@
 ![](https://travis-ci.org/akels/ElTopo.jl.svg?branch=master)
 
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://akels.github.io/ElTopo.jl/stable)
+[![](https://img.shields.io/badge/docs-dev-blue.svg)](https://akels.github.io/ElTopo.jl/dev)
+[![Build Status](https://travis-ci.org/akels/LaplaceBIE.jl.svg?branch=master)](https://travis-ci.org/akels/ElTopo.jl)
+
 # Introduction
 
 ElTopo.jl is a simple wrapper package for a C++ library [eltopo](https://github.com/tysonbrochu/eltopo) which is built with [ElTopoBuilder](https://github.com/akels/ElTopoBuilder). At the moment only Linux platform is supported, but since BinaryBuilder is being used and the library has instructions for it to be compiled on other architectures, it should not take much effort for adding support for other platforms. (Ofcourse, in a world where Cxx is a registred package ;)

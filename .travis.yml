@@ -1,7 +1,12 @@
+addons:
+  apt:
+    packages:
+    - liblapack-dev
+    -  libblas-dev
+
 language: julia
 os:
   - linux
-  - windows
 julia:
   - 1.1
 

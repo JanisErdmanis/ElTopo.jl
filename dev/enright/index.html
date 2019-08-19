@@ -51,5 +51,7 @@ record(scene, &quot;enright.gif&quot;, 1:N) do i # for i in 1:N
 
     push!(x,msh)
 
-    AbstractPlotting.force_update!()</code></pre><p>sleep(Δt)</p><pre><code class="language-julia">    global t+=Δt
+    AbstractPlotting.force_update!()
+
+    global t+=Δt
 end</code></pre><p><img src="../enright.gif" alt/></p><footer><hr/><a class="previous" href="../"><span class="direction">Previous</span><span class="title">Introduction</span></a></footer></article></body></html>

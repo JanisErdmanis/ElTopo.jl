@@ -67,7 +67,6 @@ record(scene, "enright.gif", 1:N) do i # for i in 1:N
     push!(x,msh)
     
     AbstractPlotting.force_update!()
-    # sleep(Δt)
 
     global t+=Δt
 end

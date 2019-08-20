@@ -4,5 +4,6 @@ docs/src/index.md
 deps/usr
 deps/build.log
 deps/debseltopo.jl
+deps/debs.jl
 docs/src/sphere.jl
 test/debug.jl

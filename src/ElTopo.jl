@@ -5,7 +5,7 @@ using Cxx
 using Parameters
 using GeometryTypes
 
-include("../deps/depseltopo.jl")
+include("../deps/deps.jl")
 
 """
 SurfTrack stores parameters needed for performing 

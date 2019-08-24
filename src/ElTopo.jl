@@ -8,7 +8,9 @@ using GeometryTypes
 include("../deps/deps.jl")
 
 """
-SurfTrack stores parameters needed for performing 
+    SurfTrack([...])
+
+Constructs a SurfTrack instance which holds parameters for ElTopo surface tracker stabilization. 
 """
 @with_kw struct SurfTrack
     "Elements closer than this are considered \"near\" (or proximate)"
@@ -70,6 +72,7 @@ addHeaderDir(dirname(@__FILE__)*"/../deps/usr/include/",kind=C_System)
 cxxinclude("vector")
 cxxinclude("subdivisionscheme.h")
 cxxinclude("surftrack.h")
+
 
 function stabilize(points,faces,p::SurfTrack)
     pointsout = Point{3,Float64}[]
@@ -147,6 +150,12 @@ function stabilize(points,faces,p::SurfTrack)
     return pointsout,facesout
 end
 
+
+"""
+    stabilize(msh::HomogenousMesh,p::SurfTrack)
+
+Computes stabilized mesh for a given initial triangulation `msh` with stabilization parameters `p`.
+"""
 function stabilize(msh::HomogenousMesh,parameters::SurfTrack)
     newvertices, newfaces = stabilize(msh.vertices,msh.faces,parameters)
     return HomogenousMesh(newvertices,newfaces)

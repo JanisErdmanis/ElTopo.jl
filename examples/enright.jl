@@ -1,15 +1,6 @@
-# # Introduction
+# # Enright test
 
-# ElTopo.jl is a library which allows to restructure and refine triangular mesh as it evolves. Suitable to simulate time dependant boundary problems, such as droplet behaviour uppon external fields, gradients, and it's changing surface tension. Or interfaces of homogenous liquids in a container. Full range of possibilities can be explored in the original C++ library ElTopo, which is interfaces here with Cxx.jl. 
-
-# ## The Enright test
-
-# To see the algorithm in action we may look how a triangulated sphere behaves under periodic incompressable shear flow.
-
-# First, let's define a Enright velocity field:
-using GeometryTypes
-using AbstractPlotting, GLMakie
-using ElTopo
+# To see the algorithm in action we may look how a triangulated sphere behaves under periodic incompressable shear flow defined in `velocity` method:
 
 function velocity(t,pos)
     x,y,z = pos
@@ -25,12 +16,16 @@ function velocity(t,pos)
     [u,v,w] /0.3 #/0.15
 end
 
-# First let's create a sphere mesh.
+# As previosly, let's load the a sphere mesh with two subdivisions from icosahedron:
+using ElTopo
 include("sphere.jl")
 msh = unitsphere(2)
 
+# Knowing the mesh, which corresponds to initial conditions, we can use RK2 method to integrate the velocity field. While at every time step we can stabilize the triangulation and visualize that with the fantastic Makie package:
 
-# Now let's do something fun. 
+using GeometryTypes
+using AbstractPlotting, GLMakie
+
 x = Node(msh)
 y = lift(x->x,x)
 
@@ -45,13 +40,11 @@ t = 0
 Δt = 0.01
 N = convert(Int,floor(pi/ Δt))
 
-## msh = HomogenousMesh(v0,f0)
 par = SurfTrack(allow_vertex_movement=true)
 
 record(scene, "enright.gif", 1:N) do i # for i in 1:N
     update_cam!(scene,Vec3f0(4,4,4), Vec3f0(2, 0, 0))  
 
-    ### Second order RK2
     global v = msh.vertices
     global f = msh.faces
     

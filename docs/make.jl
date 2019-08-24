@@ -1,14 +1,15 @@
 using Documenter
 using Literate
+using ElTopo
 
-try 
-    using AbstractPlotting, GLMakie  
-    @info "Animation with Makie is being made..."
-    let 
-        cd(joinpath(@__DIR__,"src"))
-        include(joinpath(@__DIR__,"../examples/enright.jl"))
-    end
-catch end
+# try 
+#     using AbstractPlotting, GLMakie  
+#     @info "Animation with Makie is being made..."
+#     let 
+#         cd(joinpath(@__DIR__,"src"))
+#         include(joinpath(@__DIR__,"../examples/enright.jl"))
+#     end
+# catch end
 
 function dropexecution(content)
     content = replace(content, "```@example" => "```julia")
